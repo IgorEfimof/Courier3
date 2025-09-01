@@ -2,11 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon195.png">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="COUR3">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Калькулятор заработка курьера</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -25,11 +21,9 @@
             --summary-title-color: #2980b9;
             --warning-color: #e74c3c;
             --highlight-color: #f39c12;
-            --keyboard-bg: #2c3e50;
-            --key-color: #ecf0f1;
-            --key-bg: #3498db;
-            --key-active-bg: #2980b9;
             --section-bg: #f8f9fa;
+            --progress-bg: #ecf0f1;
+            --progress-fill: #2ecc71;
         }
 
         .dark-theme {
@@ -47,11 +41,9 @@
             --summary-title-color: #3498db;
             --warning-color: #e74c3c;
             --highlight-color: #f39c12;
-            --keyboard-bg: #1a252f;
-            --key-color: #ecf0f1;
-            --key-bg: #2980b9;
-            --key-active-bg: #3498db;
             --section-bg: #2c3e50;
+            --progress-bg: #34495e;
+            --progress-fill: #27ae60;
         }
 
         * {
@@ -59,15 +51,6 @@
             margin: 0;
             padding: 0;
             transition: background-color 0.3s, color 0.3s;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-
-        input, select {
-            -webkit-user-select: text;
-            user-select: text;
         }
 
         body {
@@ -75,29 +58,23 @@
             color: var(--text-color);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.4;
-            padding: 10px;
+            padding: 15px;
             min-height: 100vh;
-            position: relative;
-            padding-bottom: 70px;
-            touch-action: manipulation;
-            -webkit-text-size-adjust: 100%;
         }
 
         .container {
-            width: 100%;
             max-width: 1000px;
             margin: 0 auto;
             background: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: 0 0 10px var(--shadow-color);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px var(--shadow-color);
             overflow: hidden;
         }
 
         header {
             background: var(--secondary-color);
             color: white;
-            padding: 12px 15px;
-            position: relative;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -109,15 +86,13 @@
         }
 
         h1 {
-            font-size: 1.4rem;
-            margin-bottom: 4px;
-            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
         }
 
         .description {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             opacity: 0.9;
-            color: white;
         }
 
         .theme-toggle-container {
@@ -176,33 +151,33 @@
         .content {
             display: flex;
             flex-wrap: wrap;
-            padding: 12px;
+            padding: 15px;
         }
 
         .input-section, .results-section {
             flex: 1;
             min-width: 300px;
-            padding: 12px;
+            padding: 15px;
         }
 
         .input-section {
             background: var(--card-bg);
-            border-radius: 6px;
-            margin-right: 12px;
+            border-radius: 8px;
+            margin-right: 15px;
         }
 
         .section-title {
             color: var(--primary-color);
-            margin-bottom: 12px;
-            padding-bottom: 4px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
             border-bottom: 1px solid var(--border-color);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
 
         .form-row {
             display: flex;
             gap: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             align-items: center;
         }
 
@@ -212,20 +187,19 @@
 
         label {
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
 
         input, select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 16px;
             background-color: var(--input-bg);
             color: var(--text-color);
-            caret-color: transparent;
         }
 
         .time-inputs {
@@ -237,81 +211,17 @@
             flex: 1;
         }
 
-        .custom-keyboard {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: var(--keyboard-bg);
-            padding: 10px;
-            display: none;
-            z-index: 1000;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
-            touch-action: manipulation;
-        }
-
-        .keyboard-visible {
-            display: block;
-        }
-
-        .keyboard-row {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 8px;
-        }
-
-        .keyboard-key {
-            width: 60px;
-            height: 50px;
-            margin: 0 5px;
-            background: var(--key-bg);
-            color: var(--key-color);
-            border: none;
-            border-radius: 5px;
-            font-size: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            touch-action: manipulation;
-        }
-
-        .keyboard-key:active {
-            background: var(--key-active-bg);
-        }
-
-        .key-wide {
-            width: 130px;
-        }
-
-        .key-actions {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        .key-action {
-            padding: 10px 20px;
-            margin: 0 5px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
         button {
             background: var(--primary-color);
             color: white;
             border: none;
-            padding: 10px;
-            border-radius: 4px;
+            padding: 12px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px;
             width: 100%;
-            margin-top: 8px;
+            margin-top: 10px;
             transition: background 0.3s;
-            touch-action: manipulation;
         }
 
         button:hover {
@@ -321,30 +231,30 @@
         .compact-results {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 12px;
+            margin-bottom: 18px;
         }
 
         .compact-result {
             flex: 1;
             min-width: 120px;
             background: var(--card-bg);
-            padding: 10px;
-            border-radius: 6px;
-            box-shadow: 0 1px 3px var(--shadow-color);
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px var(--shadow-color);
             text-align: center;
         }
 
         .compact-title {
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             color: var(--result-title-color);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             white-space: nowrap;
         }
 
         .compact-value {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--result-value-color);
             white-space: nowrap;
@@ -352,27 +262,27 @@
 
         .compact-summary {
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 12px;
+            margin-top: 18px;
         }
 
         .compact-summary-item {
             flex: 1;
             background: var(--summary-bg);
-            padding: 10px;
-            border-radius: 6px;
+            padding: 12px;
+            border-radius: 8px;
             text-align: center;
         }
 
         .summary-title {
             font-weight: 700;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             color: var(--summary-title-color);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         .summary-value {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--result-value-color);
         }
@@ -380,40 +290,40 @@
         .average-value {
             color: var(--highlight-color);
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         .info-text {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--primary-color);
-            margin-top: 4px;
+            margin-top: 5px;
             text-align: center;
         }
 
         .section {
             background: var(--section-bg);
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 12px;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
         }
 
         .today-summary {
             background: var(--summary-bg);
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 18px;
         }
 
         .today-title {
             font-weight: 700;
             color: var(--summary-title-color);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .today-amount {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--result-value-color);
             text-align: center;
@@ -422,24 +332,63 @@
         .today-details {
             display: flex;
             justify-content: space-between;
-            margin-top: 10px;
+            margin-top: 12px;
+            font-size: 0.95rem;
+        }
+
+        .progress-container {
+            margin: 15px 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
             font-size: 0.9rem;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: var(--progress-bg);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--progress-fill);
+            border-radius: 5px;
+            transition: width 0.5s ease-in-out;
         }
 
         .history-section {
             margin-top: 20px;
         }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
 
         .history-list {
             max-height: 200px;
             overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 5px;
         }
 
         .history-item {
             display: flex;
             justify-content: space-between;
-            padding: 8px;
+            padding: 10px;
             border-bottom: 1px solid var(--border-color);
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
         }
 
         .history-date {
@@ -450,183 +399,26 @@
             color: var(--result-value-color);
             font-weight: 600;
         }
+        
+        .btn-clear-history {
+            background-color: var(--warning-color);
+            padding: 8px 12px;
+            width: auto;
+            font-size: 0.9rem;
+        }
 
         @media (max-width: 768px) {
-            body {
-                padding: 8px;
-                padding-bottom: 70px;
-            }
-            
-            header {
-                padding: 10px 12px;
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .header-content {
-                margin-bottom: 10px;
-            }
-            
-            h1 {
-                font-size: 1.2rem;
-            }
-            
             .content {
                 flex-direction: column;
-                padding: 10px;
             }
             
             .input-section {
                 margin-right: 0;
-                margin-bottom: 12px;
-            }
-            
-            .input-section, .results-section {
-                padding: 10px;
-            }
-            
-            .section-title {
-                font-size: 1rem;
+                margin-bottom: 15px;
             }
             
             .compact-results, .compact-summary {
-                flex-direction: row;
-                gap: 8px;
-            }
-            
-            .compact-result, .compact-summary-item {
-                min-width: calc(50% - 10px);
-            }
-            
-            input, select, button {
-                padding: 8px;
-                font-size: 16px;
-            }
-            
-            .compact-value, .summary-value {
-                font-size: 0.95rem;
-            }
-
-            .keyboard-key {
-                width: 50px;
-                height: 45px;
-                font-size: 18px;
-            }
-
-            .key-wide {
-                width: 110px;
-            }
-            
-            .theme-toggle {
-                width: 55px;
-                height: 28px;
-            }
-            
-            .theme-toggle-handle {
-                width: 24px;
-                height: 24px;
-            }
-            
-            .theme-toggle.active .theme-toggle-handle {
-                transform: translateX(27px);
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.1rem;
-            }
-            
-            .description {
-                font-size: 0.8rem;
-            }
-            
-            .section-title {
-                font-size: 0.95rem;
-            }
-            
-            label, button {
-                font-size: 14px;
-            }
-            
-            input, select {
-                font-size: 16px;
-            }
-            
-            .compact-title {
-                font-size: 0.82rem;
-            }
-            
-            .compact-value, .summary-value {
-                font-size: 0.9rem;
-            }
-            
-            .info-text {
-                font-size: 0.78rem;
-            }
-            
-            .theme-toggle-text {
-                font-size: 0.8rem;
-            }
-
-            .keyboard-key {
-                width: 45px;
-                height: 40px;
-                font-size: 16px;
-                margin: 0 3px;
-            }
-
-            .key-wide {
-                width: 95px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .input-section, .results-section {
-                padding: 8px;
-            }
-            
-            .form-row {
-                margin-bottom: 6px;
-            }
-            
-            input, select {
-                padding: 8px;
-            }
-            
-            .compact-result, .compact-summary-item {
-                padding: 8px;
-                min-width: calc(50% - 8px);
-            }
-
-            .keyboard-key {
-                width: 40px;
-                height: 35px;
-                font-size: 14px;
-            }
-
-            .key-wide {
-                width: 85px;
-            }
-            
-            .theme-toggle {
-                width: 50px;
-                height: 25px;
-            }
-            
-            .theme-toggle-handle {
-                width: 21px;
-                height: 21px;
-                top: 2px;
-                left: 2px;
-            }
-            
-            .theme-toggle.active .theme-toggle-handle {
-                transform: translateX(23px);
-            }
-            
-            .theme-toggle-icon {
-                font-size: 10px;
+                flex-direction: column;
             }
         }
     </style>
@@ -636,7 +428,7 @@
         <header>
             <div class="header-content">
                 <h1>Калькулятор заработка курьера</h1>
-                <p class="description">Расчет доходов с учетом расходов</p>
+                <p class="description">Расчет доходов с учетом текущего времени и расходов</p>
             </div>
             <div class="theme-toggle-container">
                 <div class="theme-toggle" id="theme-toggle">
@@ -659,6 +451,11 @@
                     </div>
                     
                     <div class="form-group">
+                        <label for="current-time">Текущее время</label>
+                        <input type="time" id="current-time">
+                    </div>
+                    
+                    <div class="form-group">
                         <label for="end-time">Конец работы</label>
                         <input type="time" id="end-time" value="18:00">
                     </div>
@@ -667,12 +464,12 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="orders-count">Количество заказов</label>
-                        <input type="text" id="orders-count" inputmode="numeric" value="21">
+                        <input type="number" id="orders-count" min="0" value="21">
                     </div>
                     
                     <div class="form-group">
                         <label for="earned-amount">Заработанная сумма (руб.)</label>
-                        <input type="text" id="earned-amount" inputmode="decimal" value="3519,53">
+                        <input type="number" id="earned-amount" min="0" step="0.01" value="3519.53">
                     </div>
                 </div>
                 
@@ -682,18 +479,18 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="fuel-per-day">Бензин (л/день)</label>
-                            <input type="text" id="fuel-per-day" inputmode="decimal" value="5">
+                            <input type="number" id="fuel-per-day" min="0" step="0.1" value="5">
                         </div>
                         
                         <div class="form-group">
                             <label for="fuel-price">Цена бензина (руб.)</label>
-                            <input type="text" id="fuel-price" inputmode="decimal" value="50">
+                            <input type="number" id="fuel-price" min="0" step="0.01" value="50">
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="other-costs">Другие расходы (руб./день)</label>
-                        <input type="text" id="other-costs" inputmode="decimal" value="200">
+                        <input type="number" id="other-costs" min="0" step="0.01" value="200">
                     </div>
                 </div>
                 
@@ -703,12 +500,12 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="work-days-week">Дней в неделю</label>
-                            <input type="text" id="work-days-week" inputmode="numeric" value="6">
+                            <input type="number" id="work-days-week" min="1" max="7" value="6">
                         </div>
                         
                         <div class="form-group">
                             <label for="work-days-month">Дней в месяц</label>
-                            <input type="text" id="work-days-month" inputmode="numeric" value="24">
+                            <input type="number" id="work-days-month" min="1" max="31" value="24">
                         </div>
                     </div>
                 </div>
@@ -719,54 +516,72 @@
             
             <div class="results-section">
                 <div class="today-summary">
-                    <div class="today-title">Сегодня</div>
-                    <div class="today-amount" id="today-amount">3519,53 ₽</div>
+                    <div class="today-title">Прогноз на конец дня</div>
+                    <div class="today-amount" id="projected-income">0 руб.</div>
                     <div class="today-details">
-                        <span id="work-time">09:00 - 18:00</span>
-                        <span id="orders-count-display">21 заказ</span>
+                        <span id="projected-orders">0 заказов</span>
+                        <span id="projected-profit">0 руб. чистыми</span>
                     </div>
                 </div>
                 
-                <h2 class="section-title">Результаты за день</h2>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Прогресс рабочего дня</span>
+                        <span id="progress-percent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <h2 class="section-title">Прогноз заработка</h2>
+                
+                <div class="compact-summary">
+                    <div class="compact-summary-item">
+                        <div class="summary-title">На конец дня</div>
+                        <div class="summary-value" id="daily-projection">0 руб.</div>
+                    </div>
+                    
+                    <div class="compact-summary-item">
+                        <div class="summary-title">На конец недели</div>
+                        <div class="summary-value" id="weekly-projection">0 руб.</div>
+                    </div>
+                    
+                    <div class="compact-summary-item">
+                        <div class="summary-title">На конец месяца</div>
+                        <div class="summary-value" id="monthly-projection">0 руб.</div>
+                    </div>
+                </div>
+                
+                <h2 class="section-title">Текущие результаты</h2>
                 
                 <div class="compact-results">
                     <div class="compact-result">
                         <div class="compact-title">Заказов</div>
-                        <div class="compact-value" id="daily-orders">21,00</div>
+                        <div class="compact-value" id="current-orders">0</div>
                     </div>
                     
                     <div class="compact-result">
                         <div class="compact-title">Доход</div>
-                        <div class="compact-value" id="daily-income">3519,53 руб.</div>
+                        <div class="compact-value" id="current-income">0 руб.</div>
                     </div>
                     
                     <div class="compact-result">
                         <div class="compact-title">Расходы</div>
-                        <div class="compact-value" id="daily-costs">450,00 руб.</div>
+                        <div class="compact-value" id="current-costs">0 руб.</div>
                     </div>
                     
                     <div class="compact-result">
                         <div class="compact-title">Чистый доход</div>
-                        <div class="compact-value" id="daily-profit">3069,53 руб.</div>
-                    </div>
-                </div>
-                
-                <h2 class="section-title">Итоговый заработок</h2>
-                
-                <div class="compact-summary">
-                    <div class="compact-summary-item">
-                        <div class="summary-title">В неделю</div>
-                        <div class="summary-value" id="weekly-profit">18417,18 руб.</div>
-                    </div>
-                    
-                    <div class="compact-summary-item">
-                        <div class="summary-title">В месяц</div>
-                        <div class="summary-value" id="monthly-profit">73668,72 руб.</div>
+                        <div class="compact-value" id="current-profit">0 руб.</div>
                     </div>
                 </div>
                 
                 <div class="history-section">
-                    <h2 class="section-title">История дней</h2>
+                    <div class="history-header">
+                        <h2 class="section-title">История дней</h2>
+                        <button id="clear-history-btn" class="btn-clear-history">Очистить историю</button>
+                    </div>
                     <div class="history-list" id="history-list">
                         <!-- История будет добавляться динамически -->
                     </div>
@@ -775,42 +590,17 @@
         </div>
     </div>
 
-    <!-- Кастомная клавиатура -->
-    <div class="custom-keyboard" id="custom-keyboard">
-        <div class="keyboard-row">
-            <button class="keyboard-key" data-value="7">7</button>
-            <button class="keyboard-key" data-value="8">8</button>
-            <button class="keyboard-key" data-value="9">9</button>
-            <button class="keyboard-key" data-action="backspace"><i class="fas fa-backspace"></i></button>
-        </div>
-        <div class="keyboard-row">
-            <button class="keyboard-key" data-value="4">4</button>
-            <button class="keyboard-key" data-value="5">5</button>
-            <button class="keyboard-key" data-value="6">6</button>
-            <button class="keyboard-key" data-action="clear">C</button>
-        </div>
-        <div class="keyboard-row">
-            <button class="keyboard-key" data-value="1">1</button>
-            <button class="keyboard-key" data-value="2">2</button>
-            <button class="keyboard-key" data-value="3">3</button>
-            <button class="keyboard-key" data-value=",">,</button>
-        </div>
-        <div class="keyboard-row">
-            <button class="keyboard-key key-wide" data-value="0">0</button>
-            <button class="keyboard-key key-wide" data-action="hide">Готово</button>
-        </div>
-    </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Элементы DOM
             const resetBtn = document.getElementById('reset-btn');
             const saveDayBtn = document.getElementById('save-day-btn');
+            const clearHistoryBtn = document.getElementById('clear-history-btn');
             const themeToggle = document.getElementById('theme-toggle');
-            const customKeyboard = document.getElementById('custom-keyboard');
             
             // Параметры рабочего дня
             const startTimeInput = document.getElementById('start-time');
+            const currentTimeInput = document.getElementById('current-time');
             const endTimeInput = document.getElementById('end-time');
             const ordersCountInput = document.getElementById('orders-count');
             const earnedAmountInput = document.getElementById('earned-amount');
@@ -825,32 +615,29 @@
             const workDaysMonthInput = document.getElementById('work-days-month');
             
             // Результаты
-            const todayAmountElement = document.getElementById('today-amount');
-            const workTimeElement = document.getElementById('work-time');
-            const ordersCountDisplayElement = document.getElementById('orders-count-display');
-            const dailyOrdersElement = document.getElementById('daily-orders');
-            const dailyIncomeElement = document.getElementById('daily-income');
-            const dailyCostsElement = document.getElementById('daily-costs');
-            const dailyProfitElement = document.getElementById('daily-profit');
-            const weeklyProfitElement = document.getElementById('weekly-profit');
-            const monthlyProfitElement = document.getElementById('monthly-profit');
+            const projectedIncomeElement = document.getElementById('projected-income');
+            const projectedOrdersElement = document.getElementById('projected-orders');
+            const projectedProfitElement = document.getElementById('projected-profit');
+            const progressPercentElement = document.getElementById('progress-percent');
+            const progressFillElement = document.getElementById('progress-fill');
+            const dailyProjectionElement = document.getElementById('daily-projection');
+            const weeklyProjectionElement = document.getElementById('weekly-projection');
+            const monthlyProjectionElement = document.getElementById('monthly-projection');
+            const currentOrdersElement = document.getElementById('current-orders');
+            const currentIncomeElement = document.getElementById('current-income');
+            const currentCostsElement = document.getElementById('current-costs');
+            const currentProfitElement = document.getElementById('current-profit');
             const historyListElement = document.getElementById('history-list');
             
-            // Текущее активное поле ввода
-            let activeInput = null;
-            
-            // Функция для замены точки на запятую в числах
-            function formatNumberWithComma(number) {
-                return number.toString().replace('.', ',');
+            // Установка текущего времени по умолчанию
+            function setCurrentTime() {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                currentTimeInput.value = `${hours}:${minutes}`;
             }
             
-            // Функция для замены запятой на точку в числах
-            function parseNumberWithComma(value) {
-                if (typeof value === 'string') {
-                    return parseFloat(value.replace(',', '.'));
-                }
-                return value;
-            }
+            setCurrentTime();
             
             // Сохранение данных в localStorage
             function saveData() {
@@ -878,7 +665,7 @@
                     startTimeInput.value = data.startTime || '09:00';
                     endTimeInput.value = data.endTime || '18:00';
                     ordersCountInput.value = data.ordersCount || '21';
-                    earnedAmountInput.value = data.earnedAmount || '3519,53';
+                    earnedAmountInput.value = data.earnedAmount || '3519.53';
                     fuelPerDayInput.value = data.fuelPerDay || '5';
                     fuelPriceInput.value = data.fuelPrice || '50';
                     otherCostsInput.value = data.otherCosts || '200';
@@ -902,6 +689,11 @@
             function updateHistoryList(history) {
                 historyListElement.innerHTML = '';
                 
+                if (history.length === 0) {
+                    historyListElement.innerHTML = '<div class="history-item">Нет данных</div>';
+                    return;
+                }
+                
                 history.slice().reverse().forEach(item => {
                     const historyItem = document.createElement('div');
                     historyItem.className = 'history-item';
@@ -912,7 +704,7 @@
                     
                     const amountElement = document.createElement('span');
                     amountElement.className = 'history-amount';
-                    amountElement.textContent = item.amount + ' руб.';
+                    amountElement.textContent = formatNumber(item.amount) + ' руб.';
                     
                     historyItem.appendChild(dateElement);
                     historyItem.appendChild(amountElement);
@@ -920,10 +712,18 @@
                 });
             }
             
+            // Очистка истории
+            function clearHistory() {
+                if (confirm('Вы уверены, что хотите очистить всю историю? Это действие нельзя отменить.')) {
+                    localStorage.removeItem('courierHistory');
+                    updateHistoryList([]);
+                }
+            }
+            
             // Сохранение дня в историю
             function saveDay() {
                 const date = new Date().toLocaleDateString('ru-RU');
-                const amount = parseNumberWithComma(earnedAmountInput.value);
+                const amount = parseFloat(earnedAmountInput.value);
                 
                 let history = [];
                 const savedHistory = localStorage.getItem('courierHistory');
@@ -934,6 +734,9 @@
                 // Проверяем, есть ли уже запись за сегодня
                 const todayIndex = history.findIndex(item => item.date === date);
                 if (todayIndex !== -1) {
+                    if (!confirm('Запись за сегодня уже существует. Перезаписать?')) {
+                        return;
+                    }
                     history[todayIndex].amount = amount;
                 } else {
                     history.push({ date, amount });
@@ -951,170 +754,131 @@
                     startTimeInput.value = '09:00';
                     endTimeInput.value = '18:00';
                     ordersCountInput.value = '21';
-                    earnedAmountInput.value = '3519,53';
+                    earnedAmountInput.value = '3519.53';
                     fuelPerDayInput.value = '5';
                     fuelPriceInput.value = '50';
                     otherCostsInput.value = '200';
                     workDaysWeekInput.value = '6';
                     workDaysMonthInput.value = '24';
+                    setCurrentTime();
                     
                     localStorage.removeItem('courierCalculatorData');
                     calculate();
                 }
             }
             
-            // Предотвращение масштабирования при двойном тапе
-            document.addEventListener('dblclick', function(e) {
-                e.preventDefault();
-            });
+            // Преобразование времени в минуты
+            function timeToMinutes(timeStr) {
+                const [hours, minutes] = timeStr.split(':').map(Number);
+                return hours * 60 + minutes;
+            }
             
-            document.addEventListener('touchstart', function(e) {
-                if (e.touches.length > 1) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
+            // Форматирование числа с разделителями
+            function formatNumber(number) {
+                return new Intl.NumberFormat('ru-RU', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }).format(number);
+            }
             
-            let lastTouchEnd = 0;
-            document.addEventListener('touchend', function(e) {
-                const now = (new Date()).getTime();
-                if (now - lastTouchEnd <= 300) {
-                    e.preventDefault();
-                }
-                lastTouchEnd = now;
-            }, { passive: false });
-
-            // Функция расчета
+            // Расчет показателей
             function calculate() {
                 // Получаем значения из полей ввода
                 const startTime = startTimeInput.value;
+                const currentTime = currentTimeInput.value;
                 const endTime = endTimeInput.value;
-                const ordersCount = parseNumberWithComma(ordersCountInput.value) || 0;
-                const earnedAmount = parseNumberWithComma(earnedAmountInput.value) || 0;
+                const ordersCount = parseFloat(ordersCountInput.value) || 0;
+                const earnedAmount = parseFloat(earnedAmountInput.value) || 0;
                 
-                const fuelPerDay = parseNumberWithComma(fuelPerDayInput.value) || 0;
-                const fuelPrice = parseNumberWithComma(fuelPriceInput.value) || 0;
-                const otherCosts = parseNumberWithComma(otherCostsInput.value) || 0;
+                const fuelPerDay = parseFloat(fuelPerDayInput.value) || 0;
+                const fuelPrice = parseFloat(fuelPriceInput.value) || 0;
+                const otherCosts = parseFloat(otherCostsInput.value) || 0;
                 
-                const workDaysWeek = parseNumberWithComma(workDaysWeekInput.value) || 0;
-                const workDaysMonth = parseNumberWithComma(workDaysMonthInput.value) || 0;
+                const workDaysWeek = parseFloat(workDaysWeekInput.value) || 0;
+                const workDaysMonth = parseFloat(workDaysMonthInput.value) || 0;
                 
-                // Рассчитываем продолжительность рабочего дня
-                const start = new Date(`2000-01-01T${startTime}`);
-                const end = new Date(`2000-01-01T${endTime}`);
-                let diffHours = (end - start) / (1000 * 60 * 60);
-                if (diffHours < 0) {
-                    diffHours += 24; // Если работа переходит через полночь
+                // Рассчитываем продолжительность рабочего дня и прошедшее время
+                const startMinutes = timeToMinutes(startTime);
+                const currentMinutes = timeToMinutes(currentTime);
+                const endMinutes = timeToMinutes(endTime);
+                
+                let totalDayMinutes = endMinutes - startMinutes;
+                let passedMinutes = currentMinutes - startMinutes;
+                
+                // Обработка случая, когда рабочий день переходит через полночь
+                if (totalDayMinutes < 0) {
+                    totalDayMinutes += 24 * 60;
+                }
+                if (passedMinutes < 0) {
+                    passedMinutes += 24 * 60;
                 }
                 
-                // Рассчитываем расходы
+                // Проверяем, чтобы значения были корректными
+                if (totalDayMinutes <= 0 || passedMinutes < 0) {
+                    alert('Некорректное время работы! Проверьте время начала и окончания.');
+                    return;
+                }
+                
+                // Рассчитываем прогресс дня в процентах
+                const progressPercent = Math.min(100, Math.max(0, (passedMinutes / totalDayMinutes) * 100));
+                progressPercentElement.textContent = `${progressPercent.toFixed(1)}%`;
+                progressFillElement.style.width = `${progressPercent}%`;
+                
+                // Рассчитываем текущие показатели
                 const dailyFuelCost = fuelPerDay * fuelPrice;
                 const dailyCosts = dailyFuelCost + otherCosts;
-                const dailyProfit = earnedAmount - dailyCosts;
+                const currentCostsValue = dailyCosts * (progressPercent / 100);
+                const currentProfit = earnedAmount - currentCostsValue;
                 
-                const weeklyProfit = dailyProfit * workDaysWeek;
-                const monthlyProfit = dailyProfit * workDaysMonth;
+                // Рассчитываем прогнозируемые показатели на конец дня
+                let projectedOrders = ordersCount;
+                let projectedIncome = earnedAmount;
+                
+                if (progressPercent > 0 && progressPercent < 100) {
+                    projectedOrders = ordersCount * (100 / progressPercent);
+                    projectedIncome = earnedAmount * (100 / progressPercent);
+                }
+                
+                const projectedDailyCosts = dailyCosts;
+                const projectedProfit = projectedIncome - projectedDailyCosts;
+                
+                // Рассчитываем прогноз на неделю и месяц
+                const weeklyProjection = projectedProfit * workDaysWeek;
+                const monthlyProjection = projectedProfit * workDaysMonth;
                 
                 // Обновляем результаты на странице
-                todayAmountElement.textContent = formatNumberWithComma(earnedAmount.toFixed(2)) + ' ₽';
-                workTimeElement.textContent = `${startTime} - ${endTime}`;
-                ordersCountDisplayElement.textContent = `${ordersCount} заказ${ordersCount !== 1 ? (ordersCount % 10 >= 2 && ordersCount % 10 <= 4 && (ordersCount % 100 < 10 || ordersCount % 100 >= 20) ? 'а' : 'ов') : ''}`;
+                currentOrdersElement.textContent = ordersCount;
+                currentIncomeElement.textContent = `${formatNumber(earnedAmount)} руб.`;
+                currentCostsElement.textContent = `${formatNumber(currentCostsValue)} руб.`;
+                currentProfitElement.textContent = `${formatNumber(currentProfit)} руб.`;
                 
-                dailyOrdersElement.textContent = formatNumberWithComma(ordersCount.toFixed(2));
-                dailyIncomeElement.textContent = formatNumberWithComma(earnedAmount.toFixed(2)) + ' руб.';
-                dailyCostsElement.textContent = formatNumberWithComma(dailyCosts.toFixed(2)) + ' руб.';
-                dailyProfitElement.textContent = formatNumberWithComma(dailyProfit.toFixed(2)) + ' руб.';
-                weeklyProfitElement.textContent = formatNumberWithComma(weeklyProfit.toFixed(2)) + ' руб.';
-                monthlyProfitElement.textContent = formatNumberWithComma(monthlyProfit.toFixed(2)) + ' руб.';
+                projectedIncomeElement.textContent = `${formatNumber(projectedIncome)} руб.`;
+                projectedOrdersElement.textContent = `${Math.round(projectedOrders)} заказов`;
+                projectedProfitElement.textContent = `${formatNumber(projectedProfit)} руб. чистыми`;
+                
+                dailyProjectionElement.textContent = `${formatNumber(projectedProfit)} руб.`;
+                weeklyProjectionElement.textContent = `${formatNumber(weeklyProjection)} руб.`;
+                monthlyProjectionElement.textContent = `${formatNumber(monthlyProjection)} руб.`;
                 
                 // Сохраняем данные
                 saveData();
             }
             
-            // Показать кастомную клавиатуру
-            function showKeyboard() {
-                customKeyboard.classList.add('keyboard-visible');
-            }
-            
-            // Скрыть кастомную клавиатуру
-            function hideKeyboard() {
-                customKeyboard.classList.remove('keyboard-visible');
-                activeInput = null;
-            }
-            
-            // Обработчики событий для полей ввода
-            const allInputs = document.querySelectorAll('input[type="text"]');
-            allInputs.forEach(input => {
-                input.addEventListener('focus', function() {
-                    activeInput = this;
-                    showKeyboard();
-                });
-                
-                // Отключаем стандартную клавиатуру на touch-устройствах
-                input.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    this.focus();
-                });
-            });
-            
-            // Обработчики для времени
+            // Обработчики событий
             startTimeInput.addEventListener('change', calculate);
+            currentTimeInput.addEventListener('change', calculate);
             endTimeInput.addEventListener('change', calculate);
+            ordersCountInput.addEventListener('input', calculate);
+            earnedAmountInput.addEventListener('input', calculate);
+            fuelPerDayInput.addEventListener('input', calculate);
+            fuelPriceInput.addEventListener('input', calculate);
+            otherCostsInput.addEventListener('input', calculate);
+            workDaysWeekInput.addEventListener('input', calculate);
+            workDaysMonthInput.addEventListener('input', calculate);
             
-            // Обработчики для кнопок кастомной клавиатуры
-            document.querySelectorAll('.keyboard-key').forEach(key => {
-                key.addEventListener('click', function() {
-                    if (!activeInput) return;
-                    
-                    const value = this.getAttribute('data-value');
-                    const action = this.getAttribute('data-action');
-                    
-                    if (action === 'backspace') {
-                        // Удаление последнего символа
-                        activeInput.value = activeInput.value.slice(0, -1);
-                    } else if (action === 'clear') {
-                        // Очистка поля
-                        activeInput.value = '';
-                    } else if (action === 'hide') {
-                        // Скрытие клавиатуры
-                        hideKeyboard();
-                        return;
-                    } else if (value) {
-                        // Добавление значения
-                        // Проверка для десятичных чисел
-                        if (value === ',' && activeInput.value.includes(',')) {
-                            return; // Не добавляем вторую запятую
-                        }
-                        
-                        // Если поле пустое и добавляем запятую, то добавляем "0," вместо просто ","
-                        if (value === ',' && activeInput.value === '') {
-                            activeInput.value = '0,';
-                        } else {
-                            activeInput.value += value;
-                        }
-                    }
-                    
-                    // Запускаем расчет после изменения значения
-                    calculate();
-                });
-            });
-            
-            // Скрытие клавиатуры при клике вне поля ввода
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('input') && !e.target.closest('.custom-keyboard')) {
-                    hideKeyboard();
-                }
-            });
-            
-            // Обработчик события для кнопки сброса
             resetBtn.addEventListener('click', resetData);
-            
-            // Обработчик события для кнопки сохранения дня
             saveDayBtn.addEventListener('click', saveDay);
-            
-            // Автоматический расчет при изменении любого поля
-            allInputs.forEach(input => {
-                input.addEventListener('input', calculate);
-            });
+            clearHistoryBtn.addEventListener('click', clearHistory);
             
             // Переключение темы
             function toggleTheme() {
@@ -1135,12 +899,6 @@
             
             themeToggle.addEventListener('click', toggleTheme);
             
-            // Обработка касания для мобильных устройств
-            themeToggle.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                toggleTheme();
-            }, { passive: false });
-            
             // Проверка сохраненной темы
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
@@ -1153,18 +911,14 @@
                 icon.className = 'fas fa-moon theme-toggle-icon';
             }
             
-            // Установка текущего времени по умолчанию
-            const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            endTimeInput.value = `${hours}:${minutes}`;
-            
-            // Загрузка сохраненных данных
+            // Загрузка сохраненных данных и первоначальный расчет
             loadData();
             loadHistory();
-            
-            // Первоначальный расчет
             calculate();
+            
+            // Обновление текущего времени каждую минуту
+            setInterval(setCurrentTime, 60000);
+            setInterval(calculate, 30000); // Пересчет каждые 30 секунд
         });
     </script>
 </body>
