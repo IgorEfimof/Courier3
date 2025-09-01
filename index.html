@@ -2,11 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon195.png">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="COUR3">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Калькулятор курьера</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -53,6 +49,14 @@
             margin: 0;
             padding: 0;
             -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        input, select {
+            -webkit-user-select: text;
+            user-select: text;
         }
 
         body {
@@ -234,6 +238,8 @@
             margin-bottom: 12px;
             text-align: center;
             border: 1px solid var(--border);
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         .today-amount {
@@ -293,6 +299,8 @@
             cursor: pointer;
             font-size: 0.85rem;
             transition: all 0.3s;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         button:hover {
@@ -327,6 +335,8 @@
             display: none;
             z-index: 1000;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         .keyboard-visible {
@@ -353,6 +363,8 @@
             justify-content: center;
             cursor: pointer;
             transition: background 0.2s;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         .keyboard-key:active {
@@ -374,6 +386,8 @@
             border-radius: 6px;
             padding: 6px;
             margin-bottom: 8px;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         .history-item {
@@ -407,6 +421,8 @@
             align-items: center;
             font-size: 0.85rem;
             border: 1px solid var(--border);
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         .total-label {
@@ -744,6 +760,27 @@
             
             // Текущее активное поле ввода
             let activeInput = null;
+            
+            // Предотвращение масштабирования при двойном тапе
+            document.addEventListener('dblclick', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+            
+            // Предотвращение масштабирования при мультитаче
+            document.addEventListener('touchstart', function(e) {
+                if (e.touches.length > 1) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(e) {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    e.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, { passive: false });
             
             // Установка текущего времени по умолчанию
             function setCurrentTime() {
