@@ -3,10 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon195.png">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="COUR3">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Калькулятор курьера</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -373,6 +369,7 @@
             border: 1px solid var(--border);
             border-radius: 6px;
             padding: 6px;
+            margin-bottom: 8px;
         }
 
         .history-item {
@@ -395,6 +392,28 @@
         .history-amount {
             color: var(--success);
             font-weight: 700;
+        }
+
+        .history-total {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 8px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+        }
+
+        .total-label {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .total-amount {
+            color: var(--success);
+            font-weight: 700;
+            font-size: 1rem;
         }
 
         @media (max-width: 768px) {
@@ -643,6 +662,10 @@
                             <span class="history-amount">2850 ₽</span>
                         </div>
                     </div>
+                    <div class="history-total">
+                        <span class="total-label">Общий заработок:</span>
+                        <span class="total-amount" id="history-total">6050 ₽</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -713,6 +736,7 @@
             const currentCostsElement = document.getElementById('current-costs');
             const currentProfitElement = document.getElementById('current-profit');
             const historyListElement = document.getElementById('history-list');
+            const historyTotalElement = document.getElementById('history-total');
             
             // Текущее активное поле ввода
             let activeInput = null;
@@ -801,8 +825,11 @@
                 
                 if (history.length === 0) {
                     historyListElement.innerHTML = '<div class="history-item">Нет данных</div>';
+                    updateHistoryTotal(0);
                     return;
                 }
+                
+                let total = 0;
                 
                 history.slice().reverse().forEach(item => {
                     const historyItem = document.createElement('div');
@@ -819,7 +846,16 @@
                     historyItem.appendChild(dateElement);
                     historyItem.appendChild(amountElement);
                     historyListElement.appendChild(historyItem);
+                    
+                    total += item.amount;
                 });
+                
+                updateHistoryTotal(total);
+            }
+            
+            // Обновление общей суммы истории
+            function updateHistoryTotal(total) {
+                historyTotalElement.textContent = formatNumberWithComma(total.toFixed(2)) + ' ₽';
             }
             
             // Очистка истории
