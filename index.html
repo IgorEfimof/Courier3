@@ -3,39 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon195.png">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="COUR3">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Калькулятор курьера</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #3498db;
+            --primary-light: #5dade2;
             --secondary: #2c3e50;
-            --text: #333;
-            --bg: #f5f7fa;
-            --card-bg: #fff;
-            --border: #ddd;
+            --text: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --border: #e0e0e0;
             --success: #27ae60;
+            --success-light: #2ecc71;
             --warning: #e74c3c;
+            --warning-light: #ff6b6b;
             --highlight: #f39c12;
             --keyboard-bg: #2c3e50;
             --key-bg: #3498db;
+            --shadow: rgba(0, 0, 0, 0.08);
         }
 
         .dark-theme {
             --primary: #2980b9;
+            --primary-light: #3498db;
             --secondary: #1a252f;
             --text: #ecf0f1;
+            --text-light: #bdc3c7;
             --bg: #1a252f;
             --card-bg: #2c3e50;
             --border: #4a6572;
             --success: #2ecc71;
+            --success-light: #27ae60;
             --warning: #e74c3c;
+            --warning-light: #ff6b6b;
             --highlight: #f39c12;
             --keyboard-bg: #1a252f;
             --key-bg: #2980b9;
+            --shadow: rgba(0, 0, 0, 0.2);
         }
 
         * {
@@ -50,7 +56,7 @@
             background: var(--bg);
             color: var(--text);
             line-height: 1.4;
-            padding: 8px;
+            padding: 10px;
             touch-action: manipulation;
             transition: background-color 0.3s, color 0.3s;
         }
@@ -59,23 +65,24 @@
             max-width: 1000px;
             margin: 0 auto;
             background: var(--card-bg);
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px var(--shadow);
             overflow: hidden;
         }
 
         header {
-            background: var(--secondary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
-            padding: 10px 12px;
+            padding: 12px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         h1 {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin: 0;
+            font-weight: 700;
         }
 
         .theme-toggle-container {
@@ -88,14 +95,14 @@
             display: inline-block;
             width: 50px;
             height: 24px;
-            background-color: #ccc;
+            background-color: rgba(255, 255, 255, 0.3);
             border-radius: 24px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
         .theme-toggle.active {
-            background-color: var(--primary);
+            background-color: var(--secondary);
         }
 
         .theme-toggle-handle {
@@ -110,6 +117,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .theme-toggle.active .theme-toggle-handle {
@@ -130,156 +138,179 @@
         .content {
             display: flex;
             flex-wrap: wrap;
-            padding: 10px;
+            padding: 12px;
         }
 
         .input-section, .results-section {
             flex: 1;
             min-width: 300px;
-            padding: 8px;
+            padding: 10px;
         }
 
         .section-title {
             color: var(--primary);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-size: 1rem;
-            padding-bottom: 4px;
-            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--primary-light);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .section-title button {
-            font-size: 0.7rem;
-            padding: 4px 8px;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 6px;
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 10px;
         }
 
         .form-group {
-            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         label {
-            display: block;
             font-size: 0.75rem;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
             font-weight: 600;
+            color: var(--text-light);
         }
 
         input, select {
             width: 100%;
-            padding: 6px;
+            padding: 8px;
             border: 1px solid var(--border);
-            border-radius: 4px;
-            font-size: 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
             background: var(--card-bg);
             color: var(--text);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
         }
 
         .compact-results {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 6px;
-            margin-bottom: 10px;
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
         .compact-result {
             background: var(--card-bg);
-            padding: 6px;
-            border-radius: 4px;
+            padding: 10px;
+            border-radius: 8px;
             text-align: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 6px var(--shadow);
+            border: 1px solid var(--border);
         }
 
         .compact-title {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
+            color: var(--text-light);
         }
 
         .compact-value {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 700;
             color: var(--success);
         }
 
         .today-summary {
-            background: rgba(52, 152, 219, 0.1);
-            padding: 8px;
-            border-radius: 5px;
-            margin-bottom: 10px;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(41, 128, 185, 0.1));
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
             text-align: center;
+            border: 1px solid var(--border);
         }
 
         .today-amount {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 1.4rem;
+            font-weight: 800;
             color: var(--success);
-            margin: 3px 0;
+            margin: 5px 0;
         }
 
         .today-details {
             display: flex;
             justify-content: space-between;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
         }
 
         .progress-container {
-            margin: 8px 0;
+            margin: 10px 0;
         }
 
         .progress-label {
             display: flex;
             justify-content: space-between;
-            font-size: 0.75rem;
-            margin-bottom: 2px;
+            font-size: 0.8rem;
+            margin-bottom: 4px;
+            color: var(--text-light);
         }
 
         .progress-bar {
-            height: 6px;
-            background: #ecf0f1;
-            border-radius: 3px;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            background: var(--success);
-            border-radius: 3px;
-            transition: width 0.3s;
+            background: linear-gradient(90deg, var(--success-light), var(--success));
+            border-radius: 4px;
+            transition: width 0.5s ease;
         }
 
         .buttons-row {
-            display: flex;
-            gap: 6px;
-            margin-top: 8px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-top: 10px;
         }
 
         button {
-            flex: 1;
-            padding: 6px;
+            padding: 8px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             background: var(--primary);
             color: white;
             font-weight: 600;
             cursor: pointer;
-            font-size: 0.8rem;
-            transition: background 0.3s;
+            font-size: 0.85rem;
+            transition: all 0.3s;
         }
 
         button:hover {
             opacity: 0.9;
+            transform: translateY(-1px);
         }
 
         .btn-warning {
             background: var(--warning);
+        }
+
+        .btn-small {
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            background: transparent;
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .btn-small:hover {
+            background: var(--warning);
+            color: white;
         }
 
         .custom-keyboard {
@@ -288,9 +319,10 @@
             left: 0;
             width: 100%;
             background: var(--keyboard-bg);
-            padding: 8px;
+            padding: 10px;
             display: none;
             z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
         }
 
         .keyboard-visible {
@@ -300,45 +332,50 @@
         .keyboard-row {
             display: flex;
             justify-content: center;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
         .keyboard-key {
-            width: 45px;
-            height: 35px;
-            margin: 0 2px;
+            width: 50px;
+            height: 40px;
+            margin: 0 3px;
             background: var(--key-bg);
             color: white;
             border: none;
-            border-radius: 3px;
-            font-size: 14px;
+            border-radius: 5px;
+            font-size: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .keyboard-key:active {
+            background: var(--primary-light);
         }
 
         .key-wide {
-            width: 95px;
+            width: 100px;
         }
 
         .history-section {
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
         .history-list {
-            max-height: 100px;
+            max-height: 120px;
             overflow-y: auto;
             border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 4px;
+            border-radius: 6px;
+            padding: 6px;
         }
 
         .history-item {
             display: flex;
             justify-content: space-between;
-            padding: 4px;
-            font-size: 0.75rem;
+            padding: 6px;
+            font-size: 0.8rem;
             border-bottom: 1px solid var(--border);
         }
 
@@ -346,33 +383,56 @@
             border-bottom: none;
         }
 
+        .history-date {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .history-amount {
+            color: var(--success);
+            font-weight: 700;
+        }
+
         @media (max-width: 768px) {
             .content {
                 flex-direction: column;
-                padding: 6px;
+                padding: 10px;
             }
             
             .input-section, .results-section {
-                padding: 6px;
+                padding: 8px;
+                min-width: 100%;
+            }
+            
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .today-amount {
+                font-size: 1.3rem;
+            }
+            
+            h1 {
+                font-size: 1.1rem;
             }
             
             .compact-results {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
-            .today-amount {
-                font-size: 1.1rem;
-            }
-            
-            h1 {
-                font-size: 1rem;
-            }
         }
 
         @media (max-width: 480px) {
-            .form-row {
-                flex-direction: column;
-                gap: 4px;
+            body {
+                padding: 8px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 6px;
             }
             
             .compact-results {
@@ -381,17 +441,25 @@
             
             .today-details {
                 flex-direction: column;
-                gap: 2px;
+                gap: 3px;
             }
             
             .keyboard-key {
-                width: 40px;
-                height: 30px;
-                font-size: 12px;
+                width: 45px;
+                height: 35px;
+                font-size: 14px;
             }
             
             .key-wide {
-                width: 85px;
+                width: 90px;
+            }
+            
+            .buttons-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-toggle-text {
+                display: none;
             }
         }
 
@@ -429,7 +497,7 @@
             <div class="input-section">
                 <div class="section-title">Рабочий день</div>
                 
-                <div class="form-row">
+                <div class="form-grid">
                     <div class="form-group">
                         <label for="start-time">Начало</label>
                         <input type="time" id="start-time" value="09:00">
@@ -444,9 +512,7 @@
                         <label for="end-time">Конец</label>
                         <input type="time" id="end-time" value="18:00">
                     </div>
-                </div>
-                
-                <div class="form-row">
+                    
                     <div class="form-group">
                         <label for="orders-count">Заказы</label>
                         <input type="text" id="orders-count" inputmode="none" readonly value="21">
@@ -460,7 +526,7 @@
                 
                 <div class="section-title">Расходы</div>
                 
-                <div class="form-row">
+                <div class="form-grid">
                     <div class="form-group">
                         <label for="fuel-per-day">Бензин (л)</label>
                         <input type="text" id="fuel-per-day" inputmode="none" readonly value="5">
@@ -470,9 +536,7 @@
                         <label for="fuel-price">Цена (руб)</label>
                         <input type="text" id="fuel-price" inputmode="none" readonly value="50">
                     </div>
-                </div>
-                
-                <div class="form-row">
+                    
                     <div class="form-group">
                         <label for="other-costs">Другие расходы</label>
                         <input type="text" id="other-costs" inputmode="none" readonly value="200">
@@ -481,7 +545,7 @@
                 
                 <div class="section-title">График</div>
                 
-                <div class="form-row">
+                <div class="form-grid">
                     <div class="form-group">
                         <label for="work-days-week">Дней/неделя</label>
                         <input type="text" id="work-days-week" inputmode="none" readonly value="6">
@@ -494,14 +558,14 @@
                 </div>
                 
                 <div class="buttons-row">
-                    <button id="save-day-btn">Сохранить</button>
-                    <button id="reset-btn" class="btn-warning">Сбросить</button>
+                    <button id="save-day-btn">Сохранить день</button>
+                    <button id="reset-btn" class="btn-warning">Сбросить всё</button>
                 </div>
             </div>
             
             <div class="results-section">
                 <div class="today-summary">
-                    <div class="today-title">Прогноз на конец дня</div>
+                    <div>Прогноз на конец дня</div>
                     <div class="today-amount" id="projected-income">3519,53 ₽</div>
                     <div class="today-details">
                         <span id="projected-orders">21 заказ</span>
@@ -562,8 +626,8 @@
                 
                 <div class="history-section">
                     <div class="section-title">
-                        <span>История</span>
-                        <button id="clear-history-btn" class="btn-warning">Очистить</button>
+                        <span>История дней</span>
+                        <button id="clear-history-btn" class="btn-small">Очистить</button>
                     </div>
                     <div class="history-list" id="history-list">
                         <div class="history-item">
