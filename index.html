@@ -20,6 +20,20 @@
             --key-bg: #3498db;
         }
 
+        .dark-theme {
+            --primary: #2980b9;
+            --secondary: #1a252f;
+            --text: #ecf0f1;
+            --bg: #1a252f;
+            --card-bg: #2c3e50;
+            --border: #4a6572;
+            --success: #2ecc71;
+            --warning: #e74c3c;
+            --highlight: #f39c12;
+            --keyboard-bg: #1a252f;
+            --key-bg: #2980b9;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -32,8 +46,9 @@
             background: var(--bg);
             color: var(--text);
             line-height: 1.4;
-            padding: 10px;
+            padding: 8px;
             touch-action: manipulation;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .container {
@@ -48,41 +63,98 @@
         header {
             background: var(--secondary);
             color: white;
-            padding: 12px 15px;
+            padding: 10px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         h1 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin: 0;
+        }
+
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            background-color: #ccc;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .theme-toggle.active {
+            background-color: var(--primary);
+        }
+
+        .theme-toggle-handle {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle.active .theme-toggle-handle {
+            transform: translateX(26px);
+        }
+
+        .theme-toggle-icon {
+            font-size: 10px;
+            color: #f39c12;
+        }
+
+        .theme-toggle-text {
+            margin-left: 6px;
+            font-size: 0.75rem;
+            color: white;
         }
 
         .content {
             display: flex;
             flex-wrap: wrap;
-            padding: 12px;
+            padding: 10px;
         }
 
         .input-section, .results-section {
             flex: 1;
             min-width: 300px;
-            padding: 10px;
+            padding: 8px;
         }
 
         .section-title {
             color: var(--primary);
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-            padding-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            padding-bottom: 4px;
             border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title button {
+            font-size: 0.7rem;
+            padding: 4px 8px;
         }
 
         .form-row {
             display: flex;
-            gap: 8px;
-            margin-bottom: 8px;
+            gap: 6px;
+            margin-bottom: 6px;
         }
 
         .form-group {
@@ -91,108 +163,115 @@
 
         label {
             display: block;
-            font-size: 0.8rem;
-            margin-bottom: 3px;
+            font-size: 0.75rem;
+            margin-bottom: 2px;
             font-weight: 600;
         }
 
         input, select {
             width: 100%;
-            padding: 8px;
+            padding: 6px;
             border: 1px solid var(--border);
-            border-radius: 5px;
-            font-size: 14px;
+            border-radius: 4px;
+            font-size: 12px;
             background: var(--card-bg);
+            color: var(--text);
         }
 
         .compact-results {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 6px;
+            margin-bottom: 10px;
         }
 
         .compact-result {
             background: var(--card-bg);
-            padding: 8px;
-            border-radius: 5px;
+            padding: 6px;
+            border-radius: 4px;
             text-align: center;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .compact-title {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
 
         .compact-value {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: var(--success);
         }
 
         .today-summary {
-            background: #e8f4fc;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 12px;
+            background: rgba(52, 152, 219, 0.1);
+            padding: 8px;
+            border-radius: 5px;
+            margin-bottom: 10px;
             text-align: center;
         }
 
         .today-amount {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--success);
-            margin: 5px 0;
+            margin: 3px 0;
         }
 
         .today-details {
             display: flex;
             justify-content: space-between;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .progress-container {
-            margin: 10px 0;
+            margin: 8px 0;
         }
 
         .progress-label {
             display: flex;
             justify-content: space-between;
-            font-size: 0.8rem;
-            margin-bottom: 3px;
+            font-size: 0.75rem;
+            margin-bottom: 2px;
         }
 
         .progress-bar {
-            height: 8px;
+            height: 6px;
             background: #ecf0f1;
-            border-radius: 4px;
+            border-radius: 3px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
             background: var(--success);
-            border-radius: 4px;
+            border-radius: 3px;
             transition: width 0.3s;
         }
 
         .buttons-row {
             display: flex;
-            gap: 8px;
-            margin-top: 10px;
+            gap: 6px;
+            margin-top: 8px;
         }
 
         button {
             flex: 1;
-            padding: 8px;
+            padding: 6px;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             background: var(--primary);
             color: white;
             font-weight: 600;
             cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
         }
 
         .btn-warning {
@@ -205,7 +284,7 @@
             left: 0;
             width: 100%;
             background: var(--keyboard-bg);
-            padding: 10px;
+            padding: 8px;
             display: none;
             z-index: 1000;
         }
@@ -217,44 +296,45 @@
         .keyboard-row {
             display: flex;
             justify-content: center;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
         .keyboard-key {
-            width: 50px;
-            height: 40px;
-            margin: 0 3px;
+            width: 45px;
+            height: 35px;
+            margin: 0 2px;
             background: var(--key-bg);
             color: white;
             border: none;
-            border-radius: 4px;
-            font-size: 16px;
+            border-radius: 3px;
+            font-size: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
         }
 
         .key-wide {
-            width: 110px;
+            width: 95px;
         }
 
         .history-section {
-            margin-top: 12px;
+            margin-top: 10px;
         }
 
         .history-list {
-            max-height: 120px;
+            max-height: 100px;
             overflow-y: auto;
             border: 1px solid var(--border);
-            border-radius: 5px;
-            padding: 5px;
+            border-radius: 4px;
+            padding: 4px;
         }
 
         .history-item {
             display: flex;
             justify-content: space-between;
-            padding: 5px;
-            font-size: 0.8rem;
+            padding: 4px;
+            font-size: 0.75rem;
             border-bottom: 1px solid var(--border);
         }
 
@@ -265,11 +345,11 @@
         @media (max-width: 768px) {
             .content {
                 flex-direction: column;
-                padding: 8px;
+                padding: 6px;
             }
             
             .input-section, .results-section {
-                padding: 8px;
+                padding: 6px;
             }
             
             .compact-results {
@@ -277,18 +357,18 @@
             }
             
             .today-amount {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
             
             h1 {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
         }
 
         @media (max-width: 480px) {
             .form-row {
                 flex-direction: column;
-                gap: 5px;
+                gap: 4px;
             }
             
             .compact-results {
@@ -297,17 +377,17 @@
             
             .today-details {
                 flex-direction: column;
-                gap: 3px;
+                gap: 2px;
             }
             
             .keyboard-key {
-                width: 45px;
-                height: 35px;
-                font-size: 14px;
+                width: 40px;
+                height: 30px;
+                font-size: 12px;
             }
             
             .key-wide {
-                width: 95px;
+                width: 85px;
             }
         }
 
@@ -327,10 +407,18 @@
         }
     </style>
 </head>
-<body>
+<body class="light-theme">
     <div class="container">
         <header>
             <h1>Калькулятор курьера</h1>
+            <div class="theme-toggle-container">
+                <div class="theme-toggle" id="theme-toggle">
+                    <div class="theme-toggle-handle">
+                        <i class="fas fa-sun theme-toggle-icon"></i>
+                    </div>
+                </div>
+                <span class="theme-toggle-text">Тёмная</span>
+            </div>
         </header>
         
         <div class="content">
@@ -469,7 +557,10 @@
                 </div>
                 
                 <div class="history-section">
-                    <div class="section-title">История</div>
+                    <div class="section-title">
+                        <span>История</span>
+                        <button id="clear-history-btn" class="btn-warning">Очистить</button>
+                    </div>
                     <div class="history-list" id="history-list">
                         <div class="history-item">
                             <span class="history-date">12.05.2023</span>
@@ -516,6 +607,8 @@
             // Элементы DOM
             const resetBtn = document.getElementById('reset-btn');
             const saveDayBtn = document.getElementById('save-day-btn');
+            const clearHistoryBtn = document.getElementById('clear-history-btn');
+            const themeToggle = document.getElementById('theme-toggle');
             const customKeyboard = document.getElementById('custom-keyboard');
             
             // Параметры рабочего дня
@@ -586,7 +679,8 @@
                     fuelPrice: fuelPriceInput.value,
                     otherCosts: otherCostsInput.value,
                     workDaysWeek: workDaysWeekInput.value,
-                    workDaysMonth: workDaysMonthInput.value
+                    workDaysMonth: workDaysMonthInput.value,
+                    theme: document.body.classList.contains('dark-theme') ? 'dark' : 'light'
                 };
                 
                 localStorage.setItem('courierCalculatorData', JSON.stringify(data));
@@ -607,6 +701,14 @@
                     otherCostsInput.value = data.otherCosts || '200';
                     workDaysWeekInput.value = data.workDaysWeek || '6';
                     workDaysMonthInput.value = data.workDaysMonth || '24';
+                    
+                    // Загрузка темы
+                    if (data.theme === 'dark') {
+                        document.body.classList.add('dark-theme');
+                        themeToggle.classList.add('active');
+                        const icon = themeToggle.querySelector('.theme-toggle-icon');
+                        icon.className = 'fas fa-moon theme-toggle-icon';
+                    }
                     
                     calculate();
                 }
@@ -701,6 +803,23 @@
                     localStorage.removeItem('courierCalculatorData');
                     calculate();
                 }
+            }
+            
+            // Переключение темы
+            function toggleTheme() {
+                const isDark = document.body.classList.toggle('dark-theme');
+                themeToggle.classList.toggle('active', isDark);
+                
+                // Обновляем иконку
+                const icon = themeToggle.querySelector('.theme-toggle-icon');
+                if (isDark) {
+                    icon.className = 'fas fa-moon theme-toggle-icon';
+                } else {
+                    icon.className = 'fas fa-sun theme-toggle-icon';
+                }
+                
+                // Сохраняем данные
+                saveData();
             }
             
             // Преобразование времени в минуты
@@ -880,6 +999,12 @@
             
             // Обработчик события для кнопки сохранения дня
             saveDayBtn.addEventListener('click', saveDay);
+            
+            // Обработчик события для кнопки очистки истории
+            clearHistoryBtn.addEventListener('click', clearHistory);
+            
+            // Обработчик события для переключения темы
+            themeToggle.addEventListener('click', toggleTheme);
             
             // Автоматический расчет при изменении любого поля
             allInputs.forEach(input => {
